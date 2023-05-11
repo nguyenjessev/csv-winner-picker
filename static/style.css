@@ -3,5 +3,12 @@
 }
 
 html {
+  box-sizing: border-box;
   font-family: var(--system-ui);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
