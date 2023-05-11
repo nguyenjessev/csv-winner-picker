@@ -1,2 +1,4 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>CSV Winner Picker</h1>
+
+<label for="file-upload">Upload a file:</label>
+<input type="file" id="file-upload" name="file-upload" accept="text/csv">
