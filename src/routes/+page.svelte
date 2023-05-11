@@ -7,8 +7,6 @@
 
 		reader.onload = (e) => {
 			lines = e.target.result.split('\n');
-
-			console.log(lines);
 		};
 		reader.readAsText(file);
 	};
@@ -32,4 +30,12 @@
 	on:change={handleFileUpload}
 />
 
-<div class="file-info" />
+{#if lines}
+	<div class="file-info">
+		<ul>
+			{#each lines as line}
+				<li>{line}</li>
+			{/each}
+		</ul>
+	</div>
+{/if}
