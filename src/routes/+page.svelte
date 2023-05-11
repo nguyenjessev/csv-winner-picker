@@ -3,11 +3,33 @@
 	let lines;
 	let winner;
 
+	const formatEntryData = () => {
+		const headers = lines.shift().split(',');
+
+		lines.pop();
+
+		lines = lines.map((entry) => {
+			const entryData = entry.split(',');
+			const result = {};
+
+			for (let i = 0; i < headers.length; i += 1) {
+				result[headers[i]] = entryData[i];
+			}
+
+			console.log(result);
+			return result;
+		});
+
+		console.log('Post lines', lines);
+	};
+
 	const readFile = (file) => {
 		const reader = new FileReader();
 
 		reader.onload = (e) => {
 			lines = e.target.result.split('\n');
+
+			formatEntryData();
 		};
 		reader.readAsText(file);
 	};
@@ -41,7 +63,7 @@
 
 		{#if winner}
 			<div class="winner-info">
-				{winner}
+				{winner.Email}
 			</div>
 		{/if}
 	</div>
@@ -49,7 +71,7 @@
 	<div class="file-info">
 		<ul>
 			{#each lines as line}
-				<li>{line}</li>
+				<li>{line.Email}</li>
 			{/each}
 		</ul>
 	</div>
