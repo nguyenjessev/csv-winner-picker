@@ -1,6 +1,7 @@
 <script>
 	let files;
 	let lines;
+	let winner;
 
 	const readFile = (file) => {
 		const reader = new FileReader();
@@ -15,6 +16,10 @@
 		const uploadedFile = files[0];
 
 		readFile(uploadedFile);
+	};
+
+	const handlePickWinner = () => {
+		winner = lines[Math.floor(Math.random() * lines.length)];
 	};
 </script>
 
@@ -31,6 +36,16 @@
 />
 
 {#if lines}
+	<div class="winner-picker">
+		<button on:click={handlePickWinner}>Pick a Winner</button>
+
+		{#if winner}
+			<div class="winner-info">
+				{winner}
+			</div>
+		{/if}
+	</div>
+
 	<div class="file-info">
 		<ul>
 			{#each lines as line}
