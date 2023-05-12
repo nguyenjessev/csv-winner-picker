@@ -6,12 +6,12 @@
 	let entries = [];
 	let winner;
 
-	$: dedupedLines = dedupeEntries(entries);
+	$: dedupedEntries = dedupeEntries(entries);
 
 	const formatEntryData = () => {
 		const headers = entries.shift().split(',');
 
-		entries.pop();
+		if (entries[entries.length - 1] === '') entries.pop();
 
 		entries = entries.map((entry) => {
 			const entryData = entry.split(',');
@@ -62,7 +62,7 @@
 {#if entries.length}
 	<div class="file-info">
 		<span>Entries found: {entries.length}</span>
-		<span>Unique entries: {dedupedLines.length}</span>
+		<span>Unique entries: {dedupedEntries.length}</span>
 	</div>
 
 	<div class="winner-picker">
