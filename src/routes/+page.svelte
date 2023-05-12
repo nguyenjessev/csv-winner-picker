@@ -52,7 +52,8 @@
 	};
 
 	const handlePickWinner = () => {
-		winner = $entries[Math.floor(Math.random() * $entries.length)];
+		winner =
+			$dedupedEntries[Math.floor(Math.random() * $dedupedEntries.length)];
 	};
 </script>
 
