@@ -4,12 +4,13 @@
 
 	let files;
 	let entries = [];
+	let headers;
 	let winner;
 
 	$: dedupedEntries = dedupeEntries(entries);
 
 	const formatEntryData = () => {
-		const headers = entries.shift().split(',');
+		headers = entries.shift().split(',');
 
 		if (entries[entries.length - 1] === '') entries.pop();
 
@@ -60,6 +61,19 @@
 />
 
 {#if entries.length}
+	<div class="filters">
+		<fieldset>
+			<legend>Properties to dedupe on:</legend>
+
+			{#each headers as header}
+				<div>
+					<input type="checkbox" name="entry-header-{header}" id="entry-header-{header}" />
+					<label for="entry-header-{header}">{header}</label>
+				</div>
+			{/each}
+		</fieldset>
+	</div>
+
 	<div class="file-info">
 		<span>Entries found: {entries.length}</span>
 		<span>Unique entries: {dedupedEntries.length}</span>
