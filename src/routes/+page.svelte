@@ -57,15 +57,15 @@
 />
 
 {#if lines}
+	<div class="file-info">
+		Entries found: {lines.length}
+	</div>
+
 	<div class="winner-picker">
 		<button on:click={handlePickWinner}>Pick a Winner</button>
 
 		{#if winner}
 			<Winner {winner} />
 		{/if}
-	</div>
-
-	<div class="file-info">
-		Entries found: {lines.length}
 	</div>
 {/if}
