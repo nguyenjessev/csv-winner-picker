@@ -1,6 +1,7 @@
 <script>
 	import Winner from './Winner.svelte';
 	import { dedupeEntries } from './entryFilters';
+	import { dedupeFilters } from './stores.js';
 
 	let files;
 	let entries = [];
@@ -67,7 +68,13 @@
 
 			{#each headers as header}
 				<div>
-					<input type="checkbox" name="entry-header-{header}" id="entry-header-{header}" />
+					<input
+						type="checkbox"
+						bind:group={$dedupeFilters}
+						name="dedupe-filters"
+						id="entry-header-{header}"
+						value={header}
+					/>
 					<label for="entry-header-{header}">{header}</label>
 				</div>
 			{/each}
