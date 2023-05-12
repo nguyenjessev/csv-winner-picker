@@ -13,14 +13,11 @@
 			const result = {};
 
 			for (let i = 0; i < headers.length; i += 1) {
-				result[headers[i]] = entryData[i];
+				result[headers[i].trim()] = entryData[i].trim() || 'None';
 			}
 
-			console.log(result);
 			return result;
 		});
-
-		console.log('Post lines', lines);
 	};
 
 	const readFile = (file) => {
@@ -63,16 +60,12 @@
 
 		{#if winner}
 			<div class="winner-info">
-				{winner.Email}
+				{JSON.stringify(winner)}
 			</div>
 		{/if}
 	</div>
 
 	<div class="file-info">
-		<ul>
-			{#each lines as line}
-				<li>{line.Email}</li>
-			{/each}
-		</ul>
+		Entries found: {lines.length}
 	</div>
 {/if}
