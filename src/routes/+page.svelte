@@ -1,6 +1,6 @@
 <script>
 	import Winner from './Winner.svelte';
-	import { entries, dedupeFilters, dedupedEntries } from './stores.js';
+	import { entries, dedupeFilters, filteredEntries } from './stores.js';
 
 	let files;
 	let headers;
@@ -53,7 +53,7 @@
 
 	const handlePickWinner = () => {
 		winner =
-			$dedupedEntries[Math.floor(Math.random() * $dedupedEntries.length)];
+			$filteredEntries[Math.floor(Math.random() * $filteredEntries.length)];
 	};
 </script>
 
@@ -93,7 +93,7 @@
 
 	<div class="file-info">
 		<span>Entries found: {$entries.length}</span>
-		<span>Unique entries: {$dedupedEntries.length}</span>
+		<span>Filtered entries: {$filteredEntries.length}</span>
 	</div>
 
 	<div class="winner-picker">

@@ -3,7 +3,7 @@ import { derived, writable } from 'svelte/store';
 export const entries = writable([]);
 export const dedupeFilters = writable([]);
 
-export const dedupedEntries = derived(
+export const filteredEntries = derived(
 	[entries, dedupeFilters],
 	([$entries, $dedupeFilters]) => {
 		if ($dedupeFilters.length) {
