@@ -1,4 +1,6 @@
 <script>
+	import Winner from './Winner.svelte';
+
 	let files;
 	let lines;
 	let winner;
@@ -59,11 +61,7 @@
 		<button on:click={handlePickWinner}>Pick a Winner</button>
 
 		{#if winner}
-			<div class="winner-info">
-				{#each Object.keys(winner) as key}
-					<div>{key}: {winner[key]}</div>
-				{/each}
-			</div>
+			<Winner {winner} />
 		{/if}
 	</div>
 
