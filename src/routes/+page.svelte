@@ -60,7 +60,9 @@
 
 		{#if winner}
 			<div class="winner-info">
-				{JSON.stringify(winner)}
+				{#each Object.keys(winner) as key}
+					<div>{key}: {winner[key]}</div>
+				{/each}
 			</div>
 		{/if}
 	</div>
