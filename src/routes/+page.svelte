@@ -2,8 +2,20 @@
 	import Winner from './Winner.svelte';
 
 	let files;
-	let lines;
+	let lines = [];
 	let winner;
+
+	$: dedupedLines = lines.reduce((accumulator, entry) => {
+		if (
+			!accumulator.find((item) => {
+				return item.Email === entry.Email || item['IP Address'] === entry['IP Address'];
+			})
+		) {
+			accumulator.push(entry);
+		}
+
+		return accumulator;
+	}, []);
 
 	const formatEntryData = () => {
 		const headers = lines.shift().split(',');
@@ -56,9 +68,10 @@
 	on:change={handleFileUpload}
 />
 
-{#if lines}
+{#if lines.length}
 	<div class="file-info">
-		Entries found: {lines.length}
+		<span>Entries found: {lines.length}</span>
+		<span>Unique entries: {dedupedLines.length}</span>
 	</div>
 
 	<div class="winner-picker">
@@ -69,3 +82,10 @@
 		{/if}
 	</div>
 {/if}
+
+<style>
+	.file-info {
+		display: flex;
+		flex-direction: column;
+	}
+</style>
