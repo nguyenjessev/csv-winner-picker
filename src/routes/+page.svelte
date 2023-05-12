@@ -1,28 +1,19 @@
 <script>
 	import Winner from './Winner.svelte';
+	import { dedupeEntries } from './entryFilters';
 
 	let files;
-	let lines = [];
+	let entries = [];
 	let winner;
 
-	$: dedupedLines = lines.reduce((accumulator, entry) => {
-		if (
-			!accumulator.find((item) => {
-				return item.Email === entry.Email || item['IP Address'] === entry['IP Address'];
-			})
-		) {
-			accumulator.push(entry);
-		}
-
-		return accumulator;
-	}, []);
+	$: dedupedLines = dedupeEntries(entries);
 
 	const formatEntryData = () => {
-		const headers = lines.shift().split(',');
+		const headers = entries.shift().split(',');
 
-		lines.pop();
+		entries.pop();
 
-		lines = lines.map((entry) => {
+		entries = entries.map((entry) => {
 			const entryData = entry.split(',');
 			const result = {};
 
@@ -38,7 +29,7 @@
 		const reader = new FileReader();
 
 		reader.onload = (e) => {
-			lines = e.target.result.split('\n');
+			entries = e.target.result.split('\n');
 
 			formatEntryData();
 		};
@@ -52,7 +43,7 @@
 	};
 
 	const handlePickWinner = () => {
-		winner = lines[Math.floor(Math.random() * lines.length)];
+		winner = entries[Math.floor(Math.random() * entries.length)];
 	};
 </script>
 
@@ -68,9 +59,9 @@
 	on:change={handleFileUpload}
 />
 
-{#if lines.length}
+{#if entries.length}
 	<div class="file-info">
-		<span>Entries found: {lines.length}</span>
+		<span>Entries found: {entries.length}</span>
 		<span>Unique entries: {dedupedLines.length}</span>
 	</div>
 
