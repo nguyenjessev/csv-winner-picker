@@ -3,11 +3,30 @@
 	let lines;
 	let winner;
 
+	const formatEntryData = () => {
+		const headers = lines.shift().split(',');
+
+		lines.pop();
+
+		lines = lines.map((entry) => {
+			const entryData = entry.split(',');
+			const result = {};
+
+			for (let i = 0; i < headers.length; i += 1) {
+				result[headers[i].trim()] = entryData[i].trim() || 'None';
+			}
+
+			return result;
+		});
+	};
+
 	const readFile = (file) => {
 		const reader = new FileReader();
 
 		reader.onload = (e) => {
 			lines = e.target.result.split('\n');
+
+			formatEntryData();
 		};
 		reader.readAsText(file);
 	};
@@ -41,16 +60,12 @@
 
 		{#if winner}
 			<div class="winner-info">
-				{winner}
+				{JSON.stringify(winner)}
 			</div>
 		{/if}
 	</div>
 
 	<div class="file-info">
-		<ul>
-			{#each lines as line}
-				<li>{line}</li>
-			{/each}
-		</ul>
+		Entries found: {lines.length}
 	</div>
 {/if}
