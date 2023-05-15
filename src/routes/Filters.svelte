@@ -48,9 +48,15 @@
 	</fieldset>
 
 	<div class="date-filters">
-		<label for="">Start Date</label>
+		<div class="date-group">
+			<label for="start-date">Start Date (inclusive)</label>
+			<input type="date" name="start-date" id="start-date" />
+		</div>
 
-		<label for="">End Date</label>
+		<div class="date-group">
+			<label for="end-date">End Date (inclusive)</label>
+			<input type="date" name="end-date" id="end-date" />
+		</div>
 	</div>
 </div>
 
@@ -65,9 +71,14 @@
 		margin-top: 1rem;
 	}
 
-	.date-filters {
+	.date-filters,
+	.date-group {
 		display: flex;
 		flex-direction: column;
+	}
+
+	.date-filters {
+		gap: 1rem;
 	}
 
 	.apply-filters-button {
