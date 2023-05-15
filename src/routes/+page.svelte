@@ -1,6 +1,8 @@
 <script>
+	import Filters from './Filters.svelte';
 	import Winner from './Winner.svelte';
 	import {
+		headers,
 		entries,
 		dedupeFilters,
 		geofilteredEntries,
@@ -11,11 +13,10 @@
 	const blocklistedCountries = ['Guam', 'Puerto Rico', 'U.S. Virgin Islands'];
 
 	let files;
-	let headers;
 	let winner;
 
 	const formatEntryData = () => {
-		headers = $entries[0].trim().split(',');
+		headers.update(() => $entries[0].trim().split(','));
 
 		entries.update((n) => {
 			n.shift();
@@ -33,8 +34,8 @@
 				const entryData = entry.split(',');
 				const result = {};
 
-				for (let i = 0; i < headers.length; i += 1) {
-					result[headers[i].trim()] = entryData[i].trim() || 'None';
+				for (let i = 0; i < $headers.length; i += 1) {
+					result[$headers[i].trim()] = entryData[i].trim() || 'None';
 				}
 
 				return result;
@@ -73,28 +74,6 @@
 		winner =
 			$dedupedEntries[Math.floor(Math.random() * $dedupedEntries.length)];
 	};
-
-	const handleApplyDedupeFilters = () => {
-		dedupedEntries.update(() => {
-			if ($dedupeFilters.length) {
-				return $geofilteredEntries.reduce((accumulator, entry) => {
-					if (
-						!accumulator.find((item) => {
-							for (const filter of $dedupeFilters) {
-								if (item[filter] === entry[filter]) return true;
-							}
-						})
-					) {
-						accumulator.push(entry);
-					}
-
-					return accumulator;
-				}, []);
-			} else {
-				return $geofilteredEntries;
-			}
-		});
-	};
 </script>
 
 <h1>CSV Winner Picker</h1>
@@ -110,26 +89,7 @@
 />
 
 {#if $entries.length}
-	<div class="filters">
-		<fieldset>
-			<legend>De-dupe Filters:</legend>
-
-			{#each headers as header}
-				<div>
-					<input
-						type="checkbox"
-						bind:group={$dedupeFilters}
-						name="dedupe-filters"
-						id="entry-header-{header}"
-						value={header}
-					/>
-					<label for="entry-header-{header}">{header}</label>
-				</div>
-			{/each}
-
-			<button on:click={handleApplyDedupeFilters}>Apply Filters</button>
-		</fieldset>
-	</div>
+	<Filters />
 
 	<div class="file-info">
 		<span>Entries found: {$entries.length}</span>
