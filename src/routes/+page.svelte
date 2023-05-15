@@ -32,6 +32,8 @@
 				return result;
 			});
 		});
+
+		filteredEntries.update(() => $entries);
 	};
 
 	const readFile = (file) => {
@@ -54,6 +56,28 @@
 	const handlePickWinner = () => {
 		winner =
 			$filteredEntries[Math.floor(Math.random() * $filteredEntries.length)];
+	};
+
+	const handleApplyDedupeFilters = () => {
+		filteredEntries.update(() => {
+			if ($dedupeFilters.length) {
+				return $entries.reduce((accumulator, entry) => {
+					if (
+						!accumulator.find((item) => {
+							for (const filter of $dedupeFilters) {
+								if (item[filter] === entry[filter]) return true;
+							}
+						})
+					) {
+						accumulator.push(entry);
+					}
+
+					return accumulator;
+				}, []);
+			} else {
+				return $entries;
+			}
+		});
 	};
 </script>
 
@@ -87,7 +111,7 @@
 				</div>
 			{/each}
 
-			<button>Apply Filters</button>
+			<button on:click={handleApplyDedupeFilters}>Apply Filters</button>
 		</fieldset>
 	</div>
 
