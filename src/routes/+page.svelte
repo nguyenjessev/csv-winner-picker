@@ -68,11 +68,6 @@
 
 		readFile(uploadedFile);
 	};
-
-	const handlePickWinner = () => {
-		winner =
-			$dedupedEntries[Math.floor(Math.random() * $dedupedEntries.length)];
-	};
 </script>
 
 <h1>CSV Winner Picker</h1>
@@ -96,18 +91,13 @@
 		<span>De-duped entries: {$dedupedEntries.length}</span>
 	</div>
 
-	<div class="winner-picker">
-		<button on:click={handlePickWinner}>Pick a Winner</button>
-
-		{#if winner}
-			<Winner {winner} />
-		{/if}
-	</div>
+	<Winner {winner} />
 {/if}
 
 <style>
 	.file-info {
 		display: flex;
 		flex-direction: column;
+		margin-top: 1rem;
 	}
 </style>

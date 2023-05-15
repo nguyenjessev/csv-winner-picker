@@ -6,7 +6,7 @@
 		dedupedEntries
 	} from './stores';
 
-	const handleApplyDedupeFilters = () => {
+	const handleApplyFilters = () => {
 		dedupedEntries.update(() => {
 			if ($dedupeFilters.length) {
 				return $geofilteredEntries.reduce((accumulator, entry) => {
@@ -30,8 +30,8 @@
 </script>
 
 <div class="filters">
-	<fieldset>
-		<legend>De-dupe Filters:</legend>
+	<fieldset class="dedupe-filters">
+		<legend>De-dupe Filters</legend>
 
 		{#each $headers as header}
 			<div>
@@ -45,7 +45,32 @@
 				<label for="entry-header-{header}">{header}</label>
 			</div>
 		{/each}
-
-		<button on:click={handleApplyDedupeFilters}>Apply Filters</button>
 	</fieldset>
+
+	<div class="date-filters">
+		<label for="">Start Date</label>
+
+		<label for="">End Date</label>
+	</div>
 </div>
+
+<button class="apply-filters-button" on:click={handleApplyFilters}
+	>Apply Filters</button
+>
+
+<style>
+	.filters {
+		display: flex;
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+
+	.date-filters {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.apply-filters-button {
+		margin-top: 1rem;
+	}
+</style>
