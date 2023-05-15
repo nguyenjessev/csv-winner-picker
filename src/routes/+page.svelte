@@ -1,6 +1,14 @@
 <script>
 	import Winner from './Winner.svelte';
-	import { entries, dedupeFilters, filteredEntries } from './stores.js';
+	import {
+		entries,
+		dedupeFilters,
+		geofilteredEntries,
+		dedupedEntries
+	} from './stores.js';
+
+	const blocklistedStates = ['Florida', 'New York', 'Rhode Island'];
+	const blocklistedCountries = ['Guam', 'Puerto Rico', 'U.S. Virgin Islands'];
 
 	let files;
 	let headers;
@@ -33,7 +41,15 @@
 			});
 		});
 
-		filteredEntries.update(() => $entries);
+		geofilteredEntries.update(() =>
+			$entries.filter(
+				(entry) =>
+					!blocklistedStates.includes(entry.State) &&
+					!blocklistedCountries.includes(entry.Country)
+			)
+		);
+
+		dedupedEntries.update(() => $geofilteredEntries);
 	};
 
 	const readFile = (file) => {
@@ -55,13 +71,13 @@
 
 	const handlePickWinner = () => {
 		winner =
-			$filteredEntries[Math.floor(Math.random() * $filteredEntries.length)];
+			$dedupedEntries[Math.floor(Math.random() * $dedupedEntries.length)];
 	};
 
 	const handleApplyDedupeFilters = () => {
-		filteredEntries.update(() => {
+		dedupedEntries.update(() => {
 			if ($dedupeFilters.length) {
-				return $entries.reduce((accumulator, entry) => {
+				return $geofilteredEntries.reduce((accumulator, entry) => {
 					if (
 						!accumulator.find((item) => {
 							for (const filter of $dedupeFilters) {
@@ -75,7 +91,7 @@
 					return accumulator;
 				}, []);
 			} else {
-				return $entries;
+				return $geofilteredEntries;
 			}
 		});
 	};
@@ -117,7 +133,8 @@
 
 	<div class="file-info">
 		<span>Entries found: {$entries.length}</span>
-		<span>Filtered entries: {$filteredEntries.length}</span>
+		<span>Geo-filtered entries: {$geofilteredEntries.length}</span>
+		<span>De-duped entries: {$dedupedEntries.length}</span>
 	</div>
 
 	<div class="winner-picker">
