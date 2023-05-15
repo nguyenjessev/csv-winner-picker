@@ -4,7 +4,6 @@
 	import {
 		headers,
 		entries,
-		dedupeFilters,
 		geofilteredEntries,
 		dedupedEntries
 	} from './stores.js';
