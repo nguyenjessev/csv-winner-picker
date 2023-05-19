@@ -156,6 +156,10 @@
 		margin-top: 1rem;
 	}
 
+	.filters > * {
+		flex: 1;
+	}
+
 	/* .state-filter-options,
 	.country-filter-options {
 		display: grid;
