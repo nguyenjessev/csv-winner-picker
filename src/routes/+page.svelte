@@ -78,30 +78,51 @@
 	};
 </script>
 
-<h1>CSV Winner Picker</h1>
+<header>
+	<h1>CSV Winner Picker</h1>
+</header>
 
-<label for="file-upload">Upload a file:</label>
-<input
-	type="file"
-	id="file-upload"
-	name="file-upload"
-	accept="text/csv"
-	bind:files
-	on:change={handleFileUpload}
-/>
+<div class="container">
+	<label for="file-upload">Upload a file:</label>
+	<input
+		type="file"
+		id="file-upload"
+		name="file-upload"
+		accept="text/csv"
+		bind:files
+		on:change={handleFileUpload}
+	/>
 
-{#if $entries.length}
-	<Filters />
+	{#if $entries.length}
+		<Filters />
 
-	<div class="file-info">
-		<span>Entries found: {$entries.length}</span>
-		<span>Eligible entries: {$filteredEntries.length}</span>
-	</div>
+		<div class="file-info">
+			<span>Entries found: {$entries.length}</span>
+			<span>Eligible entries: {$filteredEntries.length}</span>
+		</div>
 
-	<Winner {winner} />
-{/if}
+		<Winner {winner} />
+	{/if}
+</div>
 
 <style>
+	header {
+		background: hsl(240, 10%, 10%);
+		padding: 20px;
+	}
+
+	h1 {
+		margin: 0 auto;
+		max-width: 600px;
+		width: 100%;
+	}
+
+	.container {
+		margin: 0 auto;
+		margin-top: 1rem;
+		max-width: 600px;
+	}
+
 	.file-info {
 		display: flex;
 		flex-direction: column;

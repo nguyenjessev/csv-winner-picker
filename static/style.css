@@ -15,7 +15,7 @@ html {
 }
 
 body {
-	margin: 0 auto;
-	max-width: 600px;
-	padding: 10px;
+	background: hsl(240, 10%, 20%);
+	color: white;
+	margin: 0;
 }
