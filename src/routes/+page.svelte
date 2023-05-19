@@ -39,16 +39,6 @@
 				return result;
 			});
 		});
-
-		geofilteredEntries.update(() =>
-			$entries.filter(
-				(entry) =>
-					!$blocklistedStates.includes(entry.State) &&
-					!$blocklistedCountries.includes(entry.Country)
-			)
-		);
-
-		dedupedEntries.update(() => $geofilteredEntries);
 	};
 
 	const readFile = (file) => {

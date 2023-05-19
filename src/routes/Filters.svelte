@@ -1,12 +1,24 @@
 <script>
+	import { onMount } from 'svelte';
 	import {
 		headers,
+		blocklistedStates,
+		blocklistedCountries,
 		dedupeFilters,
+		entries,
 		geofilteredEntries,
 		dedupedEntries
 	} from './stores';
 
 	const handleApplyFilters = () => {
+		geofilteredEntries.update(() =>
+			$entries.filter(
+				(entry) =>
+					!$blocklistedStates.includes(entry.State) &&
+					!$blocklistedCountries.includes(entry.Country)
+			)
+		);
+
 		dedupedEntries.update(() => {
 			if ($dedupeFilters.length) {
 				return $geofilteredEntries.reduce((accumulator, entry) => {
@@ -27,6 +39,10 @@
 			}
 		});
 	};
+
+	onMount(() => {
+		handleApplyFilters();
+	});
 </script>
 
 <div class="filters">
@@ -63,6 +79,8 @@
 <button class="apply-filters-button" on:click={handleApplyFilters}
 	>Apply Filters</button
 >
+
+<div>Processing can take a long time with many entries. Please be patient!</div>
 
 <style>
 	.filters {
