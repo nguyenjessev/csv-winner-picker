@@ -79,7 +79,7 @@
 </script>
 
 <header>
-	<h1>CSV Winner Picker</h1>
+	<h1>WINNR PICKR</h1>
 </header>
 
 <div class="container">
