@@ -8,8 +8,7 @@
 		blocklistedCountries,
 		dedupeFilters,
 		entries,
-		geofilteredEntries,
-		dedupedEntries
+		filteredEntries
 	} from './stores';
 	import dayjs from 'dayjs';
 	import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -23,8 +22,8 @@
 	// let countrySearch = '';
 
 	const applyDateFilters = () => {
-		dedupedEntries.update(() => {
-			return $dedupedEntries.filter((entry) => {
+		filteredEntries.update(() => {
+			return $filteredEntries.filter((entry) => {
 				const entryDate = dayjs(entry.Date, 'MM/DD/YYYY HH:mm').add(3, 'hour');
 				const start = startDate ? dayjs(startDate) : null;
 				const end = endDate ? dayjs(endDate).add(1, 'day') : null;
@@ -43,7 +42,7 @@
 	};
 
 	const handleApplyFilters = () => {
-		geofilteredEntries.update(() =>
+		filteredEntries.update(() =>
 			$entries.filter(
 				(entry) =>
 					!$blocklistedStates.includes(entry.State) &&
@@ -51,9 +50,11 @@
 			)
 		);
 
-		dedupedEntries.update(() => {
+		applyDateFilters();
+
+		filteredEntries.update(() => {
 			if ($dedupeFilters.length) {
-				return $geofilteredEntries.reduce((accumulator, entry) => {
+				return $filteredEntries.reduce((accumulator, entry) => {
 					if (
 						!accumulator.find((item) => {
 							for (const filter of $dedupeFilters) {
@@ -67,11 +68,10 @@
 					return accumulator;
 				}, []);
 			} else {
-				return $geofilteredEntries;
+				return $filteredEntries;
 			}
 		});
 
-		applyDateFilters();
 	};
 
 	onMount(() => {

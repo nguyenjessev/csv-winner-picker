@@ -16,5 +16,4 @@ export const blocklistedCountries = writable([
 export const dedupeFilters = writable([]);
 
 export const entries = writable([]);
-export const geofilteredEntries = writable([]);
-export const dedupedEntries = writable([]);
+export const filteredEntries = writable([]);

@@ -6,7 +6,7 @@
 		// states,
 		// countries,
 		entries,
-		dedupedEntries
+		filteredEntries
 	} from './stores.js';
 
 	let files;
@@ -95,7 +95,7 @@
 
 	<div class="file-info">
 		<span>Entries found: {$entries.length}</span>
-		<span>Eligible entries: {$dedupedEntries.length}</span>
+		<span>Eligible entries: {$filteredEntries.length}</span>
 	</div>
 
 	<Winner {winner} />

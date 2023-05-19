@@ -1,11 +1,11 @@
 <script>
-	import { dedupedEntries } from './stores';
+	import { filteredEntries } from './stores';
 
 	export let winner;
 
 	const handlePickWinner = () => {
 		winner =
-			$dedupedEntries[Math.floor(Math.random() * $dedupedEntries.length)];
+			$filteredEntries[Math.floor(Math.random() * $filteredEntries.length)];
 	};
 </script>
 
