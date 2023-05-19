@@ -76,6 +76,26 @@
 
 		readFile(uploadedFile);
 	};
+
+	const handleDragEnter = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+	};
+	const handleDragOver = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		e.dataTransfer.dropEffect = 'copy';
+	};
+	const handleDrop = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		const dt = e.dataTransfer;
+		files = dt.files;
+
+		handleFileUpload();
+	};
 </script>
 
 <header>
@@ -83,7 +103,12 @@
 </header>
 
 <div class="container">
-	<label for="file-upload">Upload a file:</label>
+	<label
+		for="file-upload"
+		on:dragenter={handleDragEnter}
+		on:dragover={handleDragOver}
+		on:drop={handleDrop}>Upload a File</label
+	>
 	<input
 		type="file"
 		id="file-upload"
@@ -122,6 +147,32 @@
 		margin-top: 1rem;
 		max-width: 600px;
 		padding-bottom: 1rem;
+	}
+
+	.container > label {
+		border: 4px dashed hsl(0, 0%, 0%);
+		border-radius: 10px;
+		color: hsl(0, 0%, 40%);
+		display: grid;
+		font-size: 2rem;
+		height: 10rem;
+		place-items: center;
+		transition: 500ms;
+		width: 100%;
+	}
+
+	.container > label:hover {
+		border: 4px dashed white;
+		color: white;
+		cursor: pointer;
+	}
+
+	#file-upload {
+		clip: rect(1px, 1px, 1px, 1px);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		width: 1px;
 	}
 
 	.file-info {

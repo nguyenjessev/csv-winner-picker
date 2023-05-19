@@ -202,6 +202,7 @@
 	} */
 
 	.dedupe-filters {
+		border: 1px solid black;
 		border-radius: 10px;
 		padding: 20px;
 	}
@@ -214,6 +215,14 @@
 
 	.date-filters {
 		gap: 1rem;
+	}
+
+	.date-group > input {
+		background: hsl(0, 10%, 10%);
+		border: none;
+		border-radius: 10px;
+		color: white;
+		padding: 0.5rem;
 	}
 
 	.apply-filters-button {
