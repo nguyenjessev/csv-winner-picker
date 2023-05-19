@@ -11,9 +11,36 @@
 		geofilteredEntries,
 		dedupedEntries
 	} from './stores';
+	import dayjs from 'dayjs';
+	import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+	dayjs.extend(customParseFormat);
+
+	let startDate;
+	let endDate;
 
 	// let stateSearch = '';
 	// let countrySearch = '';
+
+	const applyDateFilters = () => {
+		dedupedEntries.update(() => {
+			return $dedupedEntries.filter((entry) => {
+				const entryDate = dayjs(entry.Date, 'MM/DD/YYYY HH:mm').add(3, 'hour');
+				const start = startDate ? dayjs(startDate) : null;
+				const end = endDate ? dayjs(endDate).add(1, 'day') : null;
+
+				if (start && end) {
+					return entryDate.isAfter(start) && entryDate.isBefore(end);
+				} else if (start) {
+					return entryDate.isAfter(start);
+				} else if (end) {
+					return entryDate.isBefore(end);
+				} else {
+					return true;
+				}
+			});
+		});
+	};
 
 	const handleApplyFilters = () => {
 		geofilteredEntries.update(() =>
@@ -43,6 +70,8 @@
 				return $geofilteredEntries;
 			}
 		});
+
+		applyDateFilters();
 	};
 
 	onMount(() => {
@@ -133,12 +162,17 @@
 	<div class="date-filters">
 		<div class="date-group">
 			<label for="start-date">Start Date (inclusive)</label>
-			<input type="date" name="start-date" id="start-date" />
+			<input
+				type="date"
+				name="start-date"
+				id="start-date"
+				bind:value={startDate}
+			/>
 		</div>
 
 		<div class="date-group">
 			<label for="end-date">End Date (inclusive)</label>
-			<input type="date" name="end-date" id="end-date" />
+			<input type="date" name="end-date" id="end-date" bind:value={endDate} />
 		</div>
 	</div>
 </div>
