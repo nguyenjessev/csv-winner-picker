@@ -1,14 +1,7 @@
 <script>
 	import Filters from './Filters.svelte';
 	import Winner from './Winner.svelte';
-	import {
-		headers,
-		blocklistedStates,
-		blocklistedCountries,
-		entries,
-		geofilteredEntries,
-		dedupedEntries
-	} from './stores.js';
+	import { headers, states, entries, dedupedEntries } from './stores.js';
 
 	let files;
 	let winner;
@@ -38,6 +31,16 @@
 
 				return result;
 			});
+		});
+
+		states.update(() => {
+			const list = new Set();
+
+			for (const entry of $entries) {
+				list.add(entry.State);
+			}
+
+			return list;
 		});
 	};
 

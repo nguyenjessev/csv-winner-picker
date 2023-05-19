@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import {
 		headers,
+		states,
 		blocklistedStates,
 		blocklistedCountries,
 		dedupeFilters,
@@ -9,6 +10,8 @@
 		geofilteredEntries,
 		dedupedEntries
 	} from './stores';
+
+	let stateSearch = '';
 
 	const handleApplyFilters = () => {
 		geofilteredEntries.update(() =>
@@ -44,6 +47,37 @@
 		handleApplyFilters();
 	});
 </script>
+
+<fieldset class="state-filters">
+	<legend>State Filters</legend>
+
+	<input type="text" bind:value={stateSearch} />
+
+	<div class="state-filter-options">
+		{#each [...$states].sort().sort((a, b) => {
+			if ($blocklistedStates.indexOf(a) >= 0) return -1;
+			else if ($blocklistedStates.indexOf(b) >= 0) return 1;
+			return 0;
+		}) as state}
+			<div
+				style="display: {state
+					.toLowerCase()
+					.indexOf(stateSearch.toLowerCase()) >= 0
+					? 'block'
+					: 'none'};"
+			>
+				<input
+					type="checkbox"
+					bind:group={$blocklistedStates}
+					name="state-filters"
+					id="entry-state-{state}"
+					value={state}
+				/>
+				<label for="entry-state-{state}">{state}</label>
+			</div>
+		{/each}
+	</div>
+</fieldset>
 
 <div class="filters">
 	<fieldset class="dedupe-filters">
@@ -87,6 +121,13 @@
 		display: flex;
 		gap: 1rem;
 		margin-top: 1rem;
+	}
+
+	.state-filter-options {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		max-height: 10rem;
+		overflow: scroll;
 	}
 
 	.date-filters,
