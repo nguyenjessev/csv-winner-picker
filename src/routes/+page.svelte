@@ -108,7 +108,7 @@
 <style>
 	header {
 		background: hsl(240, 10%, 10%);
-		padding: 20px;
+		padding: 1rem;
 	}
 
 	h1 {
@@ -121,6 +121,7 @@
 		margin: 0 auto;
 		margin-top: 1rem;
 		max-width: 600px;
+		padding-bottom: 1rem;
 	}
 
 	.file-info {

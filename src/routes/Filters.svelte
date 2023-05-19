@@ -71,7 +71,6 @@
 				return $filteredEntries;
 			}
 		});
-
 	};
 
 	onMount(() => {
@@ -202,6 +201,11 @@
 		overflow: scroll;
 	} */
 
+	.dedupe-filters {
+		border-radius: 10px;
+		padding: 20px;
+	}
+
 	.date-filters,
 	.date-group {
 		display: flex;
@@ -213,6 +217,21 @@
 	}
 
 	.apply-filters-button {
-		margin-top: 1rem;
+		background: hsl(240, 40%, 40%);
+		border: none;
+		border-radius: 10px;
+		box-shadow: 5px 5px 10px black;
+		color: white;
+		font-size: 1.5rem;
+		margin: 1rem 0;
+		padding: 1rem;
+		transition: 200ms;
+		width: 100%;
+	}
+
+	.apply-filters-button:hover {
+		background: hsl(240, 50%, 40%);
+		cursor: pointer;
+		transform: scale(1.1);
 	}
 </style>
