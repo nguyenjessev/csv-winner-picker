@@ -1,7 +1,13 @@
 <script>
 	import Filters from './Filters.svelte';
 	import Winner from './Winner.svelte';
-	import { headers, states, entries, dedupedEntries } from './stores.js';
+	import {
+		headers,
+		// states,
+		// countries,
+		entries,
+		dedupedEntries
+	} from './stores.js';
 
 	let files;
 	let winner;
@@ -33,15 +39,25 @@
 			});
 		});
 
-		states.update(() => {
-			const list = new Set();
+		// 	states.update(() => {
+		// 		const list = new Set();
 
-			for (const entry of $entries) {
-				list.add(entry.State);
-			}
+		// 		for (const entry of $entries) {
+		// 			list.add(entry.State);
+		// 		}
 
-			return list;
-		});
+		// 		return list;
+		// 	});
+
+		// 	countries.update(() => {
+		// 		const list = new Set();
+
+		// 		for (const entry of $entries) {
+		// 			list.add(entry.Country);
+		// 		}
+
+		// 		return list;
+		// 	});
 	};
 
 	const readFile = (file) => {

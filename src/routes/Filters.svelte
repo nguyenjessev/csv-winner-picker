@@ -2,7 +2,8 @@
 	import { onMount } from 'svelte';
 	import {
 		headers,
-		states,
+		// states,
+		// countries,
 		blocklistedStates,
 		blocklistedCountries,
 		dedupeFilters,
@@ -11,7 +12,8 @@
 		dedupedEntries
 	} from './stores';
 
-	let stateSearch = '';
+	// let stateSearch = '';
+	// let countrySearch = '';
 
 	const handleApplyFilters = () => {
 		geofilteredEntries.update(() =>
@@ -48,7 +50,7 @@
 	});
 </script>
 
-<fieldset class="state-filters">
+<!-- <fieldset class="state-filters">
 	<legend>State Filters</legend>
 
 	<input type="text" bind:value={stateSearch} />
@@ -78,6 +80,37 @@
 		{/each}
 	</div>
 </fieldset>
+
+<fieldset class="country-filters">
+	<legend>Country Filters</legend>
+
+	<input type="text" bind:value={countrySearch} />
+
+	<div class="country-filter-options">
+		{#each [...$countries].sort().sort((a, b) => {
+			if ($blocklistedCountries.indexOf(a) >= 0) return -1;
+			else if ($blocklistedCountries.indexOf(b) >= 0) return 1;
+			return 0;
+		}) as country}
+			<div
+				style="display: {country
+					.toLowerCase()
+					.indexOf(countrySearch.toLowerCase()) >= 0
+					? 'block'
+					: 'none'};"
+			>
+				<input
+					type="checkbox"
+					bind:group={$blocklistedCountries}
+					name="country-filters"
+					id="entry-country-{country}"
+					value={country}
+				/>
+				<label for="entry-country-{country}">{country}</label>
+			</div>
+		{/each}
+	</div>
+</fieldset> -->
 
 <div class="filters">
 	<fieldset class="dedupe-filters">
@@ -123,12 +156,13 @@
 		margin-top: 1rem;
 	}
 
-	.state-filter-options {
+	/* .state-filter-options,
+	.country-filter-options {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 		max-height: 10rem;
 		overflow: scroll;
-	}
+	} */
 
 	.date-filters,
 	.date-group {

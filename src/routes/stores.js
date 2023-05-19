@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 
 export const headers = writable([]);
 export const states = writable([]);
+export const countries = writable([]);
 export const blocklistedStates = writable([
 	'Florida',
 	'New York',
