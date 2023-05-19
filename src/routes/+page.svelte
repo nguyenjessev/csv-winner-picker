@@ -3,13 +3,12 @@
 	import Winner from './Winner.svelte';
 	import {
 		headers,
+		blocklistedStates,
+		blocklistedCountries,
 		entries,
 		geofilteredEntries,
 		dedupedEntries
 	} from './stores.js';
-
-	const blocklistedStates = ['Florida', 'New York', 'Rhode Island'];
-	const blocklistedCountries = ['Guam', 'Puerto Rico', 'U.S. Virgin Islands'];
 
 	let files;
 	let winner;
@@ -44,8 +43,8 @@
 		geofilteredEntries.update(() =>
 			$entries.filter(
 				(entry) =>
-					!blocklistedStates.includes(entry.State) &&
-					!blocklistedCountries.includes(entry.Country)
+					!$blocklistedStates.includes(entry.State) &&
+					!$blocklistedCountries.includes(entry.Country)
 			)
 		);
 
@@ -87,8 +86,7 @@
 
 	<div class="file-info">
 		<span>Entries found: {$entries.length}</span>
-		<span>Geo-filtered entries: {$geofilteredEntries.length}</span>
-		<span>De-duped entries: {$dedupedEntries.length}</span>
+		<span>Eligible entries: {$dedupedEntries.length}</span>
 	</div>
 
 	<Winner {winner} />
