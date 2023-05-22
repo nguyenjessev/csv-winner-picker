@@ -217,6 +217,9 @@
 		gap: 1rem;
 	}
 
+	input[type="date"]::-webkit-calendar-picker-indicator { 
+		filter: invert(1);
+	}
 	.date-group > input {
 		background: hsl(0, 10%, 10%);
 		border: none;
