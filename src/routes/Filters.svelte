@@ -8,7 +8,8 @@
 		blocklistedCountries,
 		dedupeFilters,
 		entries,
-		filteredEntries
+		filteredEntries,
+		allowlistedCountries
 	} from './stores';
 	import dayjs from 'dayjs';
 	import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -46,7 +47,8 @@
 			$entries.filter(
 				(entry) =>
 					!$blocklistedStates.includes(entry.State) &&
-					!$blocklistedCountries.includes(entry.Country)
+					!$blocklistedCountries.includes(entry.Country) &&
+					$allowlistedCountries.includes(entry.Country)
 			)
 		);
 
@@ -217,7 +219,7 @@
 		gap: 1rem;
 	}
 
-	input[type="date"]::-webkit-calendar-picker-indicator { 
+	input[type='date']::-webkit-calendar-picker-indicator {
 		filter: invert(1);
 	}
 	.date-group > input {

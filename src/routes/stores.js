@@ -13,6 +13,7 @@ export const blocklistedCountries = writable([
 	'Puerto Rico',
 	'U.S. Virgin Islands'
 ]);
+export const allowlistedCountries = writable(['United States']);
 export const dedupeFilters = writable([]);
 
 export const entries = writable([]);
